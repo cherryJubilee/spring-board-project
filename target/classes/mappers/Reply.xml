@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="myReply">
+
+	<resultMap id="replyResultMap" type="Reply">
+		<result property="replyId" column="reply_id" />
+		<result property="userId" column="user_id" />
+		<result property="boardId" column="board_id" />
+		<result property="replyContent" column="reply_content" />
+		<result property="replyDate" column="reply_date" />
+	</resultMap>
+
+	<!-- 댓글을 db에 추가 -->
+	<insert id="insertReply" parameterType="Reply">
+		INSERT INTO Reply(reply_content, user_id, board_id)
+		VALUES(#{replyContent}, #{userId}, #{boardId})
+	</insert>
+
+</mapper>

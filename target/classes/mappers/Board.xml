@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="myBoard">
+
+	<resultMap id="BoardResultMap"
+		type="Board">
+		<result property="boardId" column="board_id" />
+		<result property="userId" column="user_id" />
+		<result property="boardTitle" column="board_title" />
+		<result property="boardContent" column="board_content" />
+		<result property="boardDate" column="board_date" />
+		<result property="boardImg" column="board_img" />
+		<result property="boardLike" column="board_like" />
+		<result property="boardHate" column="board_hate" />
+	</resultMap>
+
+	<!-- 게시글 db에 추가 -->
+	<insert id="insertBoard" parameterType="Board">
+		INSERT INTO board(board_title, user_id, board_content)
+		VALUES(#{boardTitle}, #{userId}, #{boardContent})
+	</insert>
+	
+	<!-- 게시글 조회 -->
+	<select id="selectBoard" parameterType="Board"
+		resultMap="BoardResultMap">
+		SELECT *
+		FROM board
+		ORDER BY board_id
+	</select>
+
+	<!--게시글 상세보기 -->
+	<select id="selectOneBoard" parameterType="Board"
+		resultMap="BoardResultMap">
+		SELECT *
+		FROM board
+		WHERE board_id = #{boardId}
+	</select>
+	
+	
+	<!-- 게시글 업데이트(수정) -->
+	<!-- 아이디 조건은 board-detail.html에서 걸어둠: 게시글 번호 조건만 쓰면 됨.  -->
+	<update id="updateBoard" parameterType="Board">
+		<![CDATA[
+		UPDATE board
+		SET
+			board_title = #{boardTitle},
+			board_content = #{boardContent}
+		WHERE board_id = #{boardId}  
+		]]>
+	</update>
+	
+	
+	<!-- 게시글 삭제 -->
+	<delete id="deleteBoard" parameterType="Board">
+	    DELETE FROM board
+	    WHERE board_id = #{boardId}
+	</delete>
+
+</mapper>
+
